@@ -22,32 +22,39 @@ public abstract class Vehiculo {
     public String getPatente() {
         return patente;
     }
-    
-    public VehiculoTipo getTipo(){
-        return tipo;
-    }
-    
-    public double getCapacidadCarga(){
-        return capacidadCarga;
-    }
-    
-    public int getAnio(){
-        return anio;
-    }
-    
-    public String getCodigoSucursal(){
-        return sucursal.getCodigo();
-    }
-    
-    public double calcularConsumo(double kilometros) {
-        return 0;
+
+    public Marca getMarca() {
+        return marca;
     }
 
-    public boolean esDe(VehiculoTipo tipo){
+    public String getModelo() {
+        return modelo;
+    }
+
+    public VehiculoTipo getTipo() {
+        return tipo;
+    }
+
+    public double getCapacidadCarga() {
+        return capacidadCarga;
+    }
+
+    public int getAnio() {
+        return anio;
+    }
+
+    public String getCodigoSucursal() {
+        return sucursal.getCodigo();
+    }
+
+    public abstract double calcularConsumo(double kilometros);
+
+    public boolean esDe(VehiculoTipo tipo) {
         return this.tipo == tipo;
     }
+
     @Override
     public String toString() {
-        return patente + " - " + marca + " " + modelo + " - Sucursal: " + sucursal.getCodigo();
+        return marca.getNombre() + " " + modelo + " - Sucursal: " + sucursal.getCodigo();
     }
 }
