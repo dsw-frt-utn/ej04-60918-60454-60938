@@ -1,19 +1,19 @@
 package domain;
 
-import java.time.LocalDate;
+import java.time.Year;
 
 public class VehiculoCombustible extends Vehiculo {
     private double kilometrosPorLitro;
     private double litrosExtra;
 
-    public VehiculoCombustible(String patente, String marca, String modelo, int anio, double capacidadCarga,
+    public VehiculoCombustible(String patente, Marca marca, String modelo, int anio, double capacidadCarga,
                                Sucursal sucursal, double kilometrosPorLitro, double litrosExtra) {
         super(VehiculoTipo.COMBUSTIBLE, patente, marca, modelo, anio, capacidadCarga, sucursal);
         this.kilometrosPorLitro = kilometrosPorLitro;
         this.litrosExtra = litrosExtra;
     }
-    
-     public double getKilometrosPorLitro() {
+
+    public double getKilometrosPorLitro() {
         return kilometrosPorLitro;
     }
 
@@ -23,8 +23,19 @@ public class VehiculoCombustible extends Vehiculo {
 
     @Override
     public double calcularConsumo(double kilometros) {
-        double extras = LocalDate.now().getYear() - anio > 5 ? (kilometros / 15) * litrosExtra : 0;
-        double total = (kilometros / kilometrosPorLitro) + extras;
-        return total;
+        if (kilometros <= 0) {
+            return 0;
+        }
+
+        double consumoBase = kilometros / kilometrosPorLitro;
+        double consumoExtra = 0;
+
+        int antiguedad = Year.now().getValue() - anio;
+
+        if (antiguedad > 5) {
+            consumoExtra = (kilometros / 15.0) * litrosExtra;
+        }
+
+        return consumoBase + consumoExtra;
     }
 }
